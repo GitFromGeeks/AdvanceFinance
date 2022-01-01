@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "774663480358",
+    "project_id": "advancefinance-f1d36",
+    "storage_bucket": "advancefinance-f1d36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774663480358:android:4cee495b1c24b8277f72e7",
+        "android_client_info": {
+          "package_name": "com.example.af"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "774663480358-gg7g796varlt3c105d037ecluk5cnbdg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnA-TRjpld3uZ5GL2lq1s-_hCeLWjj0Cs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "774663480358-gg7g796varlt3c105d037ecluk5cnbdg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
