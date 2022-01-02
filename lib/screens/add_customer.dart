@@ -5,6 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:af/utils/database.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 // ignore: camel_case_types
 class Add_customer extends StatefulWidget {
@@ -35,7 +36,6 @@ class _Add_customerState extends State<Add_customer> {
                   address: addressController.text,
                   loan_id: load_idController.text,
                   model: modelController.text,
-                  branch_code: branch_codeController.text,
                   imei: imeiController.text,
                   ref_name: ref_nameController.text,
                   ref_phone_no: ref_phone_noController.text,
@@ -48,6 +48,8 @@ class _Add_customerState extends State<Add_customer> {
                   price: double.parse(priceController.text),
                   duration: double.parse(durationController.text),
                   description: descController.text,
+                  financeMode: finance_Controller.text,
+                  branch_code: branch_codeController.text,
                 );
                 // Navigator.pop(context);
                 Navigator.of(context).pushNamed("/home");
@@ -64,7 +66,6 @@ class _Add_customerState extends State<Add_customer> {
   final TextEditingController load_idController = TextEditingController();
   final TextEditingController modelController = TextEditingController();
   // ignore: non_constant_identifier_names
-  final TextEditingController branch_codeController = TextEditingController();
   final TextEditingController imeiController = TextEditingController();
   // ignore: non_constant_identifier_names
   final TextEditingController ref_nameController = TextEditingController();
@@ -85,7 +86,9 @@ class _Add_customerState extends State<Add_customer> {
   // ignore: non_constant_identifier_names
   final TextEditingController rem_amountController = TextEditingController();
   final TextEditingController descController = TextEditingController();
+
   final TextEditingController finance_Controller = TextEditingController();
+  final TextEditingController branch_codeController = TextEditingController();
 
   // void clearText() {
   //   nameController.clear();
@@ -108,6 +111,25 @@ class _Add_customerState extends State<Add_customer> {
   //   amount_paidController.clear();
   //   rem_amountController.clear();
   // }
+
+  // List
+  var bCode = [
+    'QSR001',
+    'QSS002',
+    'QSF004',
+    'QSS005',
+    'QSM006',
+    'QSS007',
+    'QSS008'
+  ];
+  var financeModes = [
+    'SAMSUNG Finance',
+    'Bajaj Finance',
+    'HDB Finance',
+    'HDFC Finance',
+    'Home Credit',
+    'Self Finance'
+  ];
 
   final ImagePicker _picker = ImagePicker();
 
@@ -304,18 +326,18 @@ class _Add_customerState extends State<Add_customer> {
                               labelText: "Price"),
                           controller: priceController,
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.input_rounded),
-                              labelText: "Branch Code"),
-                          controller: branch_codeController,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.input_rounded),
-                              labelText: "Finance"),
-                          controller: finance_Controller,
-                        ),
+                        // TextFormField(
+                        //   decoration: InputDecoration(
+                        //       icon: Icon(Icons.input_rounded),
+                        //       labelText: "Branch Code"),
+                        //   controller: branch_codeController,
+                        // ),
+                        // TextFormField(
+                        //   decoration: InputDecoration(
+                        //       icon: Icon(Icons.input_rounded),
+                        //       labelText: "Finance"),
+                        //   controller: finance_Controller,
+                        // ),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -362,6 +384,51 @@ class _Add_customerState extends State<Add_customer> {
                               icon: Icon(Icons.description),
                               labelText: "Description"),
                           controller: descController,
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        // DropdownButton(
+                        //     hint: Text(
+                        //   "Branch Code : ${branch_codeController.text}",
+                        //   style: TextStyle(fontSize: 20),
+                        //   ),
+                        //   value: selectedBCode,
+                        //   icon: Icon(Icons.arrow_drop_down),
+                        //   iconSize: 42,
+                        //   underline: SizedBox(),
+                        //   onChanged: (),
+                        //   ),
+                        DropdownSearch<String>(
+                          mode: Mode.MENU,
+                          showSelectedItems: true,
+                          items: bCode,
+                          onChanged: (newValue) {
+                            print("---------------------");
+                            setState(() {
+                              print(newValue);
+                              branch_codeController.text = newValue!;
+                            });
+                          },
+                          label: "Branch Code",
+                          selectedItem: " ",
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        DropdownSearch(
+                          mode: Mode.MENU,
+                          showSelectedItems: true,
+                          items: financeModes,
+                          onChanged: (newValue) {
+                            print("----------------");
+                            setState(() {
+                              print(newValue);
+                              finance_Controller.text = newValue.toString();
+                            });
+                          },
+                          label: "Finance Mode",
+                          selectedItem: " ",
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,

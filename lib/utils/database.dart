@@ -108,6 +108,7 @@ class Database {
     required double price,
     required double duration,
     required String description,
+    required String financeMode,
   }) async {
     DocumentReference documentReference = _mainCollection.doc();
 
@@ -138,6 +139,7 @@ class Database {
       'date': DateTime.now(),
       'lastDue': DateTime.now(),
       'description': description,
+      'financeMode': financeMode,
     };
 
     await documentReference

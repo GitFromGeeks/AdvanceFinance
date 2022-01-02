@@ -64,6 +64,9 @@ class _Customer_detailsState extends State<Customer_details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Customer's Details"),
+      ),
       body: StreamBuilder<QuerySnapshot>(
           stream: Database.readOne(uid: widget.imei),
           builder: (context, snapshot) {
@@ -109,14 +112,13 @@ class _Customer_detailsState extends State<Customer_details> {
                   String description =
                       snapshot.data!.docs[index]['description'];
                   String profile = snapshot.data!.docs[index]['profile'];
+                  String financeMode =
+                      snapshot.data!.docs[index]['financeMode'];
                   return Container(
                     color: Colors.white,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Image(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              image: AssetImage("af.png")),
                           Row(
                             children: [
                               Image(
@@ -192,7 +194,7 @@ class _Customer_detailsState extends State<Customer_details> {
                                     ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Row(
@@ -251,6 +253,21 @@ class _Customer_detailsState extends State<Customer_details> {
                               ),
                               Text(
                                 "${dp.round()}",
+                                style: GoogleFonts.abel(),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.05,
+                              ),
+                              Text(
+                                "Finance Mode : ",
+                                style: GoogleFonts.abel(),
+                              ),
+                              Text(
+                                financeMode,
                                 style: GoogleFonts.abel(),
                               )
                             ],
@@ -474,52 +491,6 @@ class _Customer_detailsState extends State<Customer_details> {
                                 )
                               ],
                             ),
-                          ),
-                          StreamBuilder<QuerySnapshot>(
-                            stream: Database.showEmiHistory(uid: docId),
-                            builder: (context, snapshots) {
-                              if (snapshots.hasError) {
-                                return Text("NO any emi paid Yet !");
-                              } else if (snapshots.hasData ||
-                                  snapshots.data != null) {
-                                return ListView.separated(
-                                  separatorBuilder: (context, i) => SizedBox(
-                                    height: 1.0,
-                                  ),
-                                  itemCount: snapshots.data!.docs.length,
-                                  itemBuilder: (context, i) {
-                                    double hisemi =
-                                        snapshots.data!.docs[i]["emi"];
-                                    DateTime emidateTime =
-                                        snapshots.data!.docs[i][date];
-                                    String dates =
-                                        "${emidateTime.day}-${emidateTime.month}-${emidateTime.year} :: ${emidateTime.hour} :${emidateTime.minute} : ${emidateTime.second}";
-                                    return Container(
-                                      color: Colors.white,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "$emi",
-                                                  style: GoogleFonts.abel(),
-                                                ),
-                                                Text(
-                                                  dates,
-                                                  style: GoogleFonts.abel(),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              } else
-                                return Text("");
-                            },
                           ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,

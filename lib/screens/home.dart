@@ -93,6 +93,9 @@ class _HomeState extends State<Home> {
                     //         hintText: "     Search by Name/Date"),
                     //   ),
                     // ),
+                    SizedBox(
+                      width: 15,
+                    ),
                     ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
@@ -104,6 +107,10 @@ class _HomeState extends State<Home> {
                             Icon(Icons.arrow_drop_down)
                           ],
                         )),
+                    SizedBox(
+                      width: 10,
+                    ),
+
                     ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
@@ -115,6 +122,9 @@ class _HomeState extends State<Home> {
                             Icon(Icons.arrow_drop_down)
                           ],
                         )),
+                    SizedBox(
+                      width: 10,
+                    ),
                     ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
