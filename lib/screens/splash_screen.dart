@@ -1,6 +1,8 @@
+import 'package:af/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'dart:async';
-import 'login.dart';
+import 'home.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,8 +15,19 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(
         Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen())));
+        () => Navigator.push(
+            context,
+            PageTransition(
+                child: Home(),
+                type: PageTransitionType.topToBottom,
+                duration: Duration(seconds: 4)))
+        // Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => Home())
+
+        //     )
+
+        );
   }
 
   @override

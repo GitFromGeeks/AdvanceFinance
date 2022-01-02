@@ -59,6 +59,16 @@ class Database {
     return FirebaseFirestore.instance.collection("Customers").snapshots();
   }
 
+  // ReadDataWithFilter
+  static Stream<QuerySnapshot> readDataWithFilter(
+      {required String fMode, bCode}) {
+    return FirebaseFirestore.instance
+        .collection("Customers")
+        .where("financeMode", isEqualTo: fMode)
+        .where("branch_code", isEqualTo: bCode)
+        .snapshots();
+  }
+
   static Future<void> addEmiHistory({
     required double emi,
     required String cusId,

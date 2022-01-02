@@ -1,8 +1,14 @@
+import 'dart:ffi';
+
+import 'package:af/screens/add_customer.dart';
 import 'package:af/screens/customer_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:af/utils/database.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,141 +16,155 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var bCode = [
+    'QSR001',
+    'QSS002',
+    'QSF004',
+    'QSS005',
+    'QSM006',
+    'QSS007',
+    'QSS008'
+  ];
+
+  checkPeriodHelper(period) {
+    if (period == "Today") {
+      return DateTime.now();
+    }
+    if (period == "This Week") {
+      return DateTime.now();
+    }
+  }
+
+  late var initfinanceMode;
+  late var initbcode;
+  @override
+  void initState() {
+    super.initState();
+    initfinanceMode = "SAMSUNG Finance";
+    initbcode = "QSR001";
+  }
+
+  var financeModes = [
+    'SAMSUNG Finance',
+    'Bajaj Finance',
+    'HDB Finance',
+    'HDFC Finance',
+    'Home Credit',
+    'Self Finance'
+  ];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed("/login");
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                "LOGOUT",
-                                style: GoogleFonts.abel(),
-                              ),
-                              Icon(Icons.logout)
-                            ],
-                          )),
-                    ],
-                  ),
-                ],
-              ),
-              Image(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  image: AssetImage("af.png")),
-              Divider(thickness: 2.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Customers",
-                    style: GoogleFonts.abel(
-                        textStyle: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.08)),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
-                  ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.black)),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("/add_customer");
-                      },
-                      child: Row(
-                        children: [
-                          Text(
-                            "Add",
-                          ),
-                          Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          )
-                        ],
-                      ))
-                ],
-              ),
-              Divider(thickness: 2.0),
-              Card(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            "Advance Finance",
+            style: GoogleFonts.abel(
+                textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: MediaQuery.of(context).size.width * 0.08)),
+          ),
+          actions: [
+            ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  // Navigator.of(context).pushNamed("/add_customer");
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          duration: Duration(seconds: 1),
+                          child: Add_customer(),
+                          type: PageTransitionType.rightToLeft));
+                },
                 child: Row(
                   children: [
-                    // Flexible(
-                    //   child: TextField(
-                    //     decoration: InputDecoration(
-                    //         hintText: "     Search by Name/Date"),
-                    //   ),
-                    // ),
-                    SizedBox(
-                      width: 15,
+                    Text(
+                      "Add",
                     ),
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black)),
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Text("Month"),
-                            Icon(Icons.arrow_drop_down)
-                          ],
-                        )),
-                    SizedBox(
-                      width: 10,
-                    ),
-
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black)),
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Text("Branch"),
-                            Icon(Icons.arrow_drop_down)
-                          ],
-                        )),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black)),
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Text("Finance"),
-                            Icon(Icons.arrow_drop_down)
-                          ],
-                        )),
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    )
                   ],
+                ))
+          ],
+          titleSpacing: 15,
+          backgroundColor: Colors.black,
+        ),
+        body: Container(
+          color: Colors.black,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 8,
+              ),
+              Container(
+                color: Colors.white,
+                child: DropdownSearch<String>(
+                  mode: Mode.MENU,
+                  showSelectedItems: true,
+                  items: bCode,
+                  onChanged: (newValue) {
+                    setState(() {
+                      // branch_codeController.text = newValue!;
+                      initbcode = newValue!;
+                    });
+                  },
+                  selectedItem: "QSR001",
                 ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Container(
+                color: Colors.white,
+                child: DropdownSearch(
+                  mode: Mode.MENU,
+                  showSelectedItems: true,
+                  items: financeModes,
+                  onChanged: (newValue) {
+                    setState(() {
+                      // finance_Controller.text = newValue.toString();
+                      initfinanceMode = newValue!.toString();
+                    });
+                  },
+                  selectedItem: "SAMSUNG Finance",
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Container(
+                color: Colors.white,
+                child: DropdownSearch(
+                  mode: Mode.MENU,
+                  showSelectedItems: true,
+                  items: [
+                    'Today',
+                    'This Week',
+                    'This Month',
+                    '2 Months',
+                    'This Year'
+                  ],
+                  onChanged: (newValue) {
+                    // setState(() {});
+                  },
+                  selectedItem: "Today",
+                ),
+              ),
+              SizedBox(
+                height: 8,
               ),
               Expanded(
                 child: Container(
                   color: Colors.black,
                   child: Flexible(
                     child: StreamBuilder<QuerySnapshot>(
-                      stream: Database.readItem(),
+                      stream: Database.readDataWithFilter(
+                          fMode: initfinanceMode, bCode: initbcode),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Text("Something went wrong");
@@ -164,13 +184,23 @@ class _HomeState extends State<Home> {
                                 onTap: () {
                                   Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Customer_details(
-                                                imei: imei,
-                                              )));
+                                      PageTransition(
+                                          duration: Duration(milliseconds: 500),
+                                          child: Customer_details(imei: imei),
+                                          type:
+                                              PageTransitionType.rightToLeft));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             Customer_details(
+                                  //               imei: imei,
+                                  //             )));
                                 },
                                 child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(25.0)),
                                   child: Padding(
                                     padding: EdgeInsets.all(5.0),
                                     child: Column(
@@ -180,8 +210,28 @@ class _HomeState extends State<Home> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         ListTile(
-                                          title: Text(date),
-                                          trailing: Text(name),
+                                          title: Text(
+                                            name,
+                                            style: GoogleFonts.abel(
+                                                textStyle: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.05)),
+                                          ),
+                                          trailing: Text(
+                                            date,
+                                            style: GoogleFonts.abel(
+                                                textStyle: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.05)),
+                                          ),
                                         ),
                                       ],
                                     ),

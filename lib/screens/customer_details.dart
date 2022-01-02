@@ -65,7 +65,14 @@ class _Customer_detailsState extends State<Customer_details> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Customer's Details"),
+        backgroundColor: Colors.black,
+        title: Text(
+          "Finance Info",
+          style: GoogleFonts.abel(
+              textStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.width * 0.08)),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: Database.readOne(uid: widget.imei),
@@ -119,6 +126,9 @@ class _Customer_detailsState extends State<Customer_details> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          SizedBox(
+                            height: 10,
+                          ),
                           Row(
                             children: [
                               Image(
@@ -195,8 +205,18 @@ class _Customer_detailsState extends State<Customer_details> {
                                   ],
                                 ),
                               ),
+                              IconButton(
+                                  onPressed: () {
+                                    _deleted_confirm(context, docId);
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ))
                             ],
                           ),
+                          SizedBox(height: 5),
                           Row(
                             children: [
                               SizedBox(
@@ -545,13 +565,13 @@ class _Customer_detailsState extends State<Customer_details> {
                                       _EMI_PopUp(context, emiPaid, emi,
                                           totalDue, docId);
                                     }),
-                                CupertinoButton(
-                                    borderRadius: BorderRadius.circular(0),
-                                    color: Colors.red,
-                                    child: Text("Delete File"),
-                                    onPressed: () {
-                                      _deleted_confirm(context, docId);
-                                    }),
+                                // CupertinoButton(
+                                //     borderRadius: BorderRadius.circular(0),
+                                //     color: Colors.red,
+                                //     child: Text("Delete File"),
+                                //     onPressed: () {
+                                //       _deleted_confirm(context, docId);
+                                //     }),
                               ],
                             ),
                           )

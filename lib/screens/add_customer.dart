@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:af/screens/home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:af/utils/database.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: camel_case_types
 class Add_customer extends StatefulWidget {
@@ -52,7 +56,11 @@ class _Add_customerState extends State<Add_customer> {
                   branch_code: branch_codeController.text,
                 );
                 // Navigator.pop(context);
-                Navigator.of(context).pushNamed("/home");
+                // Navigator.of(context).pushNamed("/home");
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: Home(), type: PageTransitionType.leftToRight));
               })
         ]).show();
   }
@@ -263,6 +271,16 @@ class _Add_customerState extends State<Add_customer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+          "New File",
+          style: GoogleFonts.abel(
+              textStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.width * 0.08)),
+        ),
+      ),
       body: isLoading
           ? Center(
               child: Column(
@@ -283,46 +301,70 @@ class _Add_customerState extends State<Add_customer> {
                             image: AssetImage("af.png")),
                         TextFormField(
                           decoration: InputDecoration(
-                              icon: Icon(Icons.account_circle_rounded),
-                              labelText: "Name"),
+                            fillColor: Colors.black,
+                            icon: Icon(
+                              Icons.account_circle_rounded,
+                              color: Colors.black,
+                            ),
+                            labelText: "Name",
+                          ),
                           controller: nameController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.phone),
+                              icon: Icon(
+                                Icons.phone,
+                                color: Colors.black,
+                              ),
                               labelText: "Mobile Number"),
                           controller: phone_noController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.email), labelText: "email"),
+                              icon: Icon(
+                                Icons.email,
+                                color: Colors.black,
+                              ),
+                              labelText: "email"),
                           controller: emailController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.streetAddress,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.local_activity_sharp),
+                              icon: Icon(
+                                Icons.local_activity_sharp,
+                                color: Colors.black,
+                              ),
                               labelText: "Address"),
                           controller: addressController,
                         ),
                         TextFormField(
                           decoration: InputDecoration(
-                              icon: Icon(Icons.input_rounded),
+                              icon: Icon(
+                                Icons.input_rounded,
+                                color: Colors.black,
+                              ),
                               labelText: "Loan ID"),
                           controller: load_idController,
                         ),
                         TextFormField(
                           decoration: InputDecoration(
-                              icon: Icon(Icons.phone_android),
+                              icon: Icon(
+                                Icons.phone_android,
+                                color: Colors.black,
+                              ),
                               labelText: "Model"),
                           controller: modelController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.price_change),
+                              icon: Icon(
+                                Icons.price_change,
+                                color: Colors.black,
+                              ),
                               labelText: "Price"),
                           controller: priceController,
                         ),
@@ -341,47 +383,68 @@ class _Add_customerState extends State<Add_customer> {
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.input_rounded),
+                              icon: Icon(
+                                Icons.input_rounded,
+                                color: Colors.black,
+                              ),
                               labelText: "IMEI"),
                           controller: imeiController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.input_rounded),
+                              icon: Icon(
+                                Icons.input_rounded,
+                                color: Colors.black,
+                              ),
                               labelText: "Down payment"),
                           controller: dpController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.input_rounded),
+                              icon: Icon(
+                                Icons.input_rounded,
+                                color: Colors.black,
+                              ),
                               labelText: "File Charge"),
                           controller: file_chargeController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.timelapse),
+                              icon: Icon(
+                                Icons.timelapse,
+                                color: Colors.black,
+                              ),
                               labelText: "Duration"),
                           controller: durationController,
                         ),
                         TextFormField(
                           decoration: InputDecoration(
-                              icon: Icon(Icons.description),
+                              icon: Icon(
+                                Icons.description,
+                                color: Colors.black,
+                              ),
                               labelText: "Ref. Name"),
                           controller: ref_nameController,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(Icons.description),
+                              icon: Icon(
+                                Icons.description,
+                                color: Colors.black,
+                              ),
                               labelText: "Ref. No."),
                           controller: ref_phone_noController,
                         ),
                         TextFormField(
                           decoration: InputDecoration(
-                              icon: Icon(Icons.description),
+                              icon: Icon(
+                                Icons.description,
+                                color: Colors.black,
+                              ),
                               labelText: "Description"),
                           controller: descController,
                         ),
@@ -438,7 +501,7 @@ class _Add_customerState extends State<Add_customer> {
                                     MediaQuery.of(context).size.width * 0.05),
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey),
+                                    primary: Colors.black),
                                 onPressed: () {
                                   _picProfile();
                                 },
@@ -464,7 +527,7 @@ class _Add_customerState extends State<Add_customer> {
                                     MediaQuery.of(context).size.width * 0.05),
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey),
+                                    primary: Colors.black),
                                 onPressed: () {
                                   _picAdhaarFront();
                                 },
@@ -490,7 +553,7 @@ class _Add_customerState extends State<Add_customer> {
                                     MediaQuery.of(context).size.width * 0.05),
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey),
+                                    primary: Colors.black),
                                 onPressed: () {
                                   _picAdhaarBack();
                                 },
@@ -516,7 +579,7 @@ class _Add_customerState extends State<Add_customer> {
                                     MediaQuery.of(context).size.width * 0.05),
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey),
+                                    primary: Colors.black),
                                 onPressed: () {
                                   _picPanPhoto();
                                 },
@@ -534,33 +597,34 @@ class _Add_customerState extends State<Add_customer> {
                                 : Text("")
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width * 0.05),
-                            ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-                                  print(
-                                      "Uploading Profile photo---------------------");
-                                  _uploadProfileToStorageHelper(profileImage!);
-                                  print(
-                                      "Uploading adhaar front --------------");
-                                  _uploadAdhaarFrontToStorageHelper(
-                                      adhaarFront!);
-                                  print("Uploading Adhar Back -------------");
-                                  _uploadAdhaarBackToStorageHelper(adhaarBack!);
-                                  print(
-                                      "Uploading pan card-----------------------");
-                                  _uploadPanCardToStorageHelper(pan_photo!);
-                                },
-                                child: Text("Submit"))
-                          ],
-                        ),
+                        CupertinoButton(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(18.0)),
+                            color: Colors.black,
+                            child: Text(
+                              "Submit",
+                              style: GoogleFonts.abel(
+                                  textStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.06)),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              print(
+                                  "Uploading Profile photo---------------------");
+                              _uploadProfileToStorageHelper(profileImage!);
+                              print("Uploading adhaar front --------------");
+                              _uploadAdhaarFrontToStorageHelper(adhaarFront!);
+                              print("Uploading Adhar Back -------------");
+                              _uploadAdhaarBackToStorageHelper(adhaarBack!);
+                              print(
+                                  "Uploading pan card-----------------------");
+                              _uploadPanCardToStorageHelper(pan_photo!);
+                            })
                       ],
                     ),
                   ),
